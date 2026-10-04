@@ -11,3 +11,11 @@
 
 # Temporary Kaggle download fragments
 *.kaggle-partial
+
+venv/
+__pycache__/
+*.pyc
+.env
+data/
+*.joblib.backup-*
+*.joblib.handcrafted-*
