@@ -1,5 +1,10 @@
 # Multimodal AI-Generated Content Detection
+<p align="center">
 
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Scikit--learn-orange)
+![Deep Learning](https://img.shields.io/badge/Deep%20Learning-PyTorch-red)
 
 A FastAPI backend that detects AI-generated or manipulated **text**, **images**, and **audio**, and combines the three into a single confidence-calibrated verdict: **Real** or **Fake**.
 
