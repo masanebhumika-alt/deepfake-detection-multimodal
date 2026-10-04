@@ -1,0 +1,13 @@
+# Python environments and caches
+**/venv/
+**/.venv/
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Large local datasets and flattened training data
+/backend/data/
+/backend/hc3_flat.csv
+
+# Temporary Kaggle download fragments
+*.kaggle-partial
