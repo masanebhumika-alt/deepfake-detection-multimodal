@@ -3,8 +3,6 @@
 
 A FastAPI backend that detects AI-generated or manipulated **text**, **images**, and **audio**, and combines the three into a single confidence-calibrated verdict: **Real** or **Fake**.
 
-![System Architecture](architecture.png)
-
 ---
 
 ## Table of Contents
@@ -40,19 +38,31 @@ A FastAPI backend that detects AI-generated or manipulated **text**, **images**,
 ## How It Works
 
 1. A client sends text, an image, or an audio clip to a `/detect/*` endpoint.
-2. **Preprocessing** cleans the input for its modality:
-   - Text: tokenize and clean
-   - Image: face crop and alignment
-   - Audio: resample and voice activity detection (VAD)
-3. **Feature extraction** builds signals for the detector:
-   - Text: perplexity and temporal statistics
-   - Image: regional CLIP embeddings
-   - Audio: Whisper or spectrogram embeddings
-4. A **per-modality classifier** produces a real/fake score.
-5. The **fusion layer** (`fusion.py`) merges the scores into one verdict with a confidence value.
+2. **Text:** the active `text_model.joblib` uses word and character TF-IDF features plus six stylometric features, including GPT-2 perplexity, with a scikit-learn Logistic Regression classifier.
+3. **Image:** the active `image_model.joblib` uses 512-dimensional embeddings from a frozen ImageNet ResNet18 feature extractor and a scikit-learn Logistic Regression classifier.
+4. **Audio:** Librosa extracts mean spectral flatness, zero-crossing-rate standard deviation, and mean MFCC variance; a scikit-learn Random Forest classifies those features.
+5. The **fusion layer** (`backend/app/fusion.py`) weights modality scores by confidence and returns a combined verdict.
 6. The API returns the result as JSON.
 
-> The diagram shows the target design (RoBERTa, HFR-ViT, LCNN). The trained baseline models in `backend/app/models/artifacts/` are serialized with `joblib`.
+```mermaid
+flowchart LR
+   client[Client] --> api[FastAPI endpoints]
+   api --> text[Text input]
+   text --> tfidf[Word/character TF-IDF + stylometric features<br/>GPT-2 perplexity]
+   tfidf --> text_model[Logistic Regression<br/>text_model.joblib]
+   api --> image[Image upload]
+   image --> resnet[Frozen ImageNet ResNet18<br/>512-dimensional embedding]
+   resnet --> image_model[Logistic Regression<br/>image_model.joblib]
+   api --> audio[Audio upload]
+   audio --> librosa[Librosa spectral, zero-crossing,<br/>and MFCC features]
+   librosa --> audio_model[Random Forest<br/>audio_model.joblib]
+   text_model --> fusion[Confidence-calibrated fusion]
+   image_model --> fusion
+   audio_model --> fusion
+   fusion --> result[JSON verdict]
+```
+
+The existing `architecture.png` is a legacy target-design diagram; the Mermaid diagram above describes the implemented pipeline.
 
 ---
 
@@ -62,7 +72,7 @@ A FastAPI backend that detects AI-generated or manipulated **text**, **images**,
 | --- | --- |
 | API | FastAPI, Uvicorn |
 | Language | Python 3.10+ |
-| Models | Per-modality detectors (text, image, audio) |
+| Models | GPT-2 perplexity feature, ResNet18 embeddings, scikit-learn Logistic Regression and Random Forest |
 | Model storage | `joblib` artifacts |
 | Fusion | Confidence-calibrated late fusion |
 | Docs | Swagger UI (OpenAPI) |
@@ -91,6 +101,7 @@ Deepfake_Detection/
 │   │   └── load_unified_dataset.py # Dataset download instructions
 │   ├── build_mini_protocol.py
 │   ├── check_protocol.py
+│   ├── compare_models.py
 │   ├── download_mini_audio.py
 │   ├── test_inference.py
 │   ├── verify_audio.py
@@ -214,6 +225,8 @@ Models are compared with these metrics:
 | F1 | Balance of precision and recall |
 | AUC | Ranking quality across thresholds |
 | EER | Equal error rate, standard for spoof detection |
+
+Run `python compare_models.py` from `backend/` to compare Logistic Regression, Random Forest, and each modality's production estimator on stratified held-out splits. Extracted features are cached under `backend/training_logs/cache/` for resumable reruns; that cache is excluded from Git. The metrics report is written to `backend/training_logs/results_summary.json`.
 
 ---
 

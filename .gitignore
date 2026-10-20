@@ -8,6 +8,7 @@
 # Large local datasets and flattened training data
 /backend/data/
 /backend/hc3_flat.csv
+/backend/training_logs/cache/
 
 # Temporary Kaggle download fragments
 *.kaggle-partial
