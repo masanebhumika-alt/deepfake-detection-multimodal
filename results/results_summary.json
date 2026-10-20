@@ -1,0 +1,267 @@
+{
+  "text": {
+    "Logistic Regression": {
+      "accuracy": 0.947103,
+      "precision": 0.932677,
+      "recall": 0.962712,
+      "f1": 0.947456,
+      "auc": 0.986717,
+      "accuracy_ci_95": {
+        "lower": 0.932893,
+        "upper": 0.958438,
+        "n": 1191
+      }
+    },
+    "Random Forest": {
+      "accuracy": 0.95382,
+      "precision": 0.929374,
+      "recall": 0.981356,
+      "f1": 0.954658,
+      "auc": 0.991531,
+      "accuracy_ci_95": {
+        "lower": 0.940372,
+        "upper": 0.964351,
+        "n": 1191
+      }
+    },
+    "Linear SVM": {
+      "accuracy": 0.959698,
+      "precision": 0.948675,
+      "recall": 0.971186,
+      "f1": 0.959799,
+      "auc": 0.988034,
+      "accuracy_ci_95": {
+        "lower": 0.946971,
+        "upper": 0.969469,
+        "n": 1191
+      }
+    },
+    "Deployed model (frozen) - original split (chunk-level, leakage-prone)": {
+      "accuracy": 0.950833,
+      "precision": 0.939837,
+      "recall": 0.963333,
+      "f1": 0.95144,
+      "auc": 0.988864,
+      "accuracy_ci_95": {
+        "lower": 0.937096,
+        "upper": 0.961693,
+        "n": 1200
+      }
+    }
+  },
+  "image": {
+    "Logistic Regression": {
+      "accuracy": 0.785,
+      "precision": 0.784431,
+      "recall": 0.786,
+      "f1": 0.785215,
+      "auc": 0.864586,
+      "accuracy_ci_95": {
+        "lower": 0.766458,
+        "upper": 0.80245,
+        "n": 2000
+      }
+    },
+    "Random Forest": {
+      "accuracy": 0.7545,
+      "precision": 0.771612,
+      "recall": 0.723,
+      "f1": 0.746515,
+      "auc": 0.826449,
+      "accuracy_ci_95": {
+        "lower": 0.735161,
+        "upper": 0.772863,
+        "n": 2000
+      }
+    },
+    "Linear SVM": {
+      "accuracy": 0.7865,
+      "precision": 0.783383,
+      "recall": 0.792,
+      "f1": 0.787668,
+      "auc": 0.863741,
+      "accuracy_ci_95": {
+        "lower": 0.768,
+        "upper": 0.803901,
+        "n": 2000
+      }
+    },
+    "Deployed model (frozen)": {
+      "accuracy": 0.788,
+      "precision": 0.77907,
+      "recall": 0.804,
+      "f1": 0.791339,
+      "auc": 0.862508,
+      "accuracy_ci_95": {
+        "lower": 0.761589,
+        "upper": 0.812206,
+        "n": 1000
+      }
+    }
+  },
+  "audio": {
+    "Logistic Regression": {
+      "accuracy": 0.75,
+      "precision": 0.768817,
+      "recall": 0.715,
+      "f1": 0.740933,
+      "auc": 0.810225,
+      "accuracy_ci_95": {
+        "lower": 0.705322,
+        "upper": 0.789922,
+        "n": 400
+      }
+    },
+    "Random Forest": {
+      "accuracy": 0.7525,
+      "precision": 0.782123,
+      "recall": 0.7,
+      "f1": 0.738786,
+      "auc": 0.839762,
+      "accuracy_ci_95": {
+        "lower": 0.707938,
+        "upper": 0.792258,
+        "n": 400
+      }
+    },
+    "Linear SVM": {
+      "accuracy": 0.755,
+      "precision": 0.783333,
+      "recall": 0.705,
+      "f1": 0.742105,
+      "auc": 0.8138,
+      "accuracy_ci_95": {
+        "lower": 0.710557,
+        "upper": 0.794592,
+        "n": 400
+      }
+    },
+    "Deployed model (frozen)": {
+      "accuracy": 0.7525,
+      "precision": 0.782123,
+      "recall": 0.7,
+      "f1": 0.738786,
+      "auc": 0.839762,
+      "accuracy_ci_95": {
+        "lower": 0.707938,
+        "upper": 0.792258,
+        "n": 400
+      }
+    }
+  },
+  "dataset_sizes": {
+    "text": {
+      "benchmark_split": {
+        "total": 6000,
+        "train": 4809,
+        "test": 1191,
+        "train_class_balance": {
+          "0": 2399,
+          "1": 2410
+        },
+        "test_class_balance": {
+          "0": 601,
+          "1": 590
+        },
+        "method": "GroupShuffleSplit",
+        "description": "source-grouped; leakage-reduced text baseline split",
+        "test_size": 0.2,
+        "random_state": 42,
+        "sampling_seed": 42,
+        "selected_per_class": 3000,
+        "source_group_key": "zero-based HC3 CSV answer-row index",
+        "train_source_answers": 4614,
+        "test_source_answers": 1154,
+        "source_answers_in_both_splits": 0
+      },
+      "deployed_holdout": {
+        "train": 4800,
+        "test": 1200,
+        "train_class_balance": {
+          "0": 2400,
+          "1": 2400
+        },
+        "test_class_balance": {
+          "0": 600,
+          "1": 600
+        },
+        "method": "train_test_split(test_size=0.2, stratified)",
+        "description": "original split (chunk-level, leakage-prone)",
+        "random_state": 42,
+        "sampling_seed": 42,
+        "selected_per_class": 3000,
+        "source_grouping": false
+      },
+      "grouped_frozen_score": {
+        "status": "not reported",
+        "reason": "Frozen model was trained on a chunk-level split; grouped-split metrics come from refit baselines."
+      }
+    },
+    "image": {
+      "benchmark_split": {
+        "total": 10000,
+        "train": 8000,
+        "test": 2000,
+        "train_class_balance": {
+          "0": 4000,
+          "1": 4000
+        },
+        "test_class_balance": {
+          "0": 1000,
+          "1": 1000
+        }
+      },
+      "deployed_holdout": {
+        "method": "separate image test folder; per-class sample seeded with 43",
+        "train": "not recorded in image_model.joblib",
+        "test": 1000,
+        "train_class_balance": "not recorded in image_model.joblib",
+        "test_class_balance": {
+          "0": 500,
+          "1": 500
+        },
+        "model_training_count": "not recorded in image_model.joblib"
+      }
+    },
+    "audio": {
+      "benchmark_split": {
+        "total": 2000,
+        "train": 1600,
+        "test": 400,
+        "train_class_balance": {
+          "0": 800,
+          "1": 800
+        },
+        "test_class_balance": {
+          "0": 200,
+          "1": 200
+        }
+      },
+      "deployed_holdout": {
+        "method": "file list in audio_model.split.json",
+        "train": 1600,
+        "test": 400,
+        "train_class_balance": {
+          "0": 800,
+          "1": 800
+        },
+        "test_class_balance": {
+          "0": 200,
+          "1": 200
+        },
+        "random_state": 42,
+        "test_size": 0.2
+      }
+    }
+  },
+  "seeds": {
+    "benchmark_split": 42,
+    "text_balanced_sampling": 42,
+    "text_grouped_baseline_split": 42,
+    "text_original_split": 42,
+    "image_benchmark_subsample": 42,
+    "image_deployed_test_sample": 43,
+    "audio_benchmark_split": 42,
+    "audio_deployed_split": 42
+  }
+}

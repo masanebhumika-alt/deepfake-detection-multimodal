@@ -1,0 +1,54 @@
+{
+  "text": {
+    "dataset": "HC3 flattened answer rows",
+    "csv_path": "hc3_flat.csv",
+    "source_group_key": "zero-based CSV row index; local CSV has no source-answer ID column",
+    "split_method": "GroupShuffleSplit(test_size=0.2, random_state=42)",
+    "selected_per_class": 3000,
+    "selected_chunks": 6000,
+    "train_chunks": 4809,
+    "test_chunks": 1191,
+    "train_label_counts": {
+      "0": 2399,
+      "1": 2410
+    },
+    "test_label_counts": {
+      "0": 601,
+      "1": 590
+    },
+    "train_source_answers": 4614,
+    "test_source_answers": 1154,
+    "source_answers_in_both_splits": 0,
+    "exact_text_values_in_both_splits": 6,
+    "production_estimator_type": "LogisticRegression",
+    "accuracy": 0.947103274559194,
+    "f1": 0.9474562135112594
+  },
+  "images": {
+    "dataset": "140k Real and Fake Faces",
+    "image_root": "data\\faces\\real_vs_fake\\real-vs-fake",
+    "hash_algorithm": "MD5",
+    "image_files_scanned_by_split": {
+      "train": 100000,
+      "valid": 20000,
+      "test": 20000
+    },
+    "total_image_files_scanned": 140000,
+    "unique_content_hashes_shared_across_splits": 0,
+    "duplicate_file_copies_across_splits": 0,
+    "duplicates_by_split_pair": {
+      "train/valid": {
+        "shared_md5_hashes": 0,
+        "matching_file_pairs": 0
+      },
+      "train/test": {
+        "shared_md5_hashes": 0,
+        "matching_file_pairs": 0
+      },
+      "valid/test": {
+        "shared_md5_hashes": 0,
+        "matching_file_pairs": 0
+      }
+    }
+  }
+}
