@@ -20,3 +20,5 @@ __pycache__/
 data/
 *.joblib.backup-*
 *.joblib.handcrafted-*
+# Generated experiment logs and model caches
+/backend/training_logs/
